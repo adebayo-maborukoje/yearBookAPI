@@ -20,7 +20,7 @@ router.route('/')
   var newMember = req.body;
     yearBook.create(newMember, function (err, newMember){
     if(err){
-            res.status(500).send(err);
+            res.send(err);
       // return errorHandler(err);
     }
     res.json(newMember);
