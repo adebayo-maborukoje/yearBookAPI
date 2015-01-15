@@ -44,15 +44,16 @@ var yearBookSchema = new Schema({
   organisation:{type:String, default: "No Organisation"},
   marital: {type: String, default: "single" }, 
   avatar :{type:String, default: "https://bootstrapmaster.com/wp-content/themes/bootstrap/img/avatars/noavatar.png"},
-  graduation:{type:Number, default: 2005},
   date: {type: Date, default: Date.now},
   bio :{type:String},
-  email:{type: String}
+  email:{type: String, trim:true,},
+  interest: {type: String},
+  specialization: [{type: String}],
+  portfolio: {type: String},
+  twitter: {type: String},
+  facebook: {type:String},
+  linkedin :{type: String}
 });
 
-yearBookSchema.path('email').validate(function (email) {
-   var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-   return emailRegex.test(email.text); 
-}, 'The e-mail field cannot be empty.');
 yearBookSchema.plugin(uniqueValidator);
 mongoose.model('yearBook', yearBookSchema);

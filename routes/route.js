@@ -4,6 +4,16 @@ var mongoose = require('mongoose');
 require('../db/yearBookDB');
 var bodyParser = require('body-parser');
 var yearBook = mongoose.model('yearBook');
+// var multer = require('multer');
+
+router.route('/upload')
+.post( function(req,res){
+  if(done==true){
+    res.json(req.files.thumbnail.path);
+  } else {
+      res.json('not uploaded');
+    }
+  });
 
 router.route('/')
 .get(function (req, res){
