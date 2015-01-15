@@ -19,7 +19,10 @@ router.route('/')
 .get(function (req, res){
   yearBook.find({}, '-_id -__v', function(err, data){
     if(err){
-      res.status(500).send(err);
+          res.json({
+          message: err,
+          status: 404
+        });
       // return errorHandler(err);
     }
 
@@ -30,7 +33,10 @@ router.route('/')
   var newMember = req.body;
     yearBook.create(newMember, function (err, newMember){
     if(err){
-            res.status(403).send(err);
+            res.json({
+              message: err,
+              status: 403
+            });
       // return errorHandler(err);
     }
     res.json(newMember);
@@ -44,7 +50,10 @@ router.route('/:username')
   yearBook.find({username: query}, '-_id -__v', function(err, member){
     if(err){
       // return errorHandler(err);
-          res.status(500).send(err);
+          res.json({
+            message: err,
+            status: 404
+          });
     }
     res.json(member);
   });
@@ -54,7 +63,11 @@ router.route('/:username')
   yearBook.findOneAndUpdate({username:req.params.username}, req.body, function (err, EditMember){
     if(err){
     //  return errorHandler(err);
-  res.status(500).send(err);
+  // res.status(500).send(err);
+    res.json({
+      message: err,
+      status: 302
+    });
     }
   res.json(EditMember);
   //   else {
