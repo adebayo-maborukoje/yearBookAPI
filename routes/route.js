@@ -6,27 +6,34 @@ var bodyParser = require('body-parser');
 var yearBook = mongoose.model('yearBook');
 // var multer = require('multer');
 
-router.route('/upload')
-.post( function(req,res){
-  if(done==true){
-    res.json(req.files.thumbnail.path);
-  } else {
-      res.json('not uploaded');
-    }
-  });
+// router.route('/upload')
+// .post( function(req,res){
+//   if(done==true){
+//     res.json(req.files.thumbnail.path);
+//   } else {
+//       res.json('not uploaded');
+//     }
+//   });
 
 router.route('/')
 .get(function (req, res){
   yearBook.find({}, '-_id -__v', function(err, data){
     if(err){
           res.json({
-          message: err,
+          message: "NOT IN THE DATABASE",
           status: 404
         });
       // return errorHandler(err);
+    }else if(data.length < 1){
+      res.json ({
+        message : "FILE NOT FOUND",
+        status: 404
+      })
     }
+    else{
 
     res.json(data);
+   }
   });
 })
 .post(function (req, res){
@@ -46,28 +53,36 @@ router.route('/')
   
 router.route('/:username')
 .get(function (req, res){
-  var query = parser(req.params.username); //see if you can move this outside
+  var query = req.params.username; //see if you can move this outside
   yearBook.find({username: query}, '-_id -__v', function(err, member){
     if(err){
-      // return errorHandler(err);
           res.json({
-            message: err,
-            status: 404
-          });
+          message: "NOT IN THE DATABASE",
+          status: 404
+        });
+      // return errorHandler(err);
+    }else if(member.length < 1){
+      res.json ({
+        message : "FILE NOT FOUND",
+        status: 404
+      });
     }
+    else{
+
     res.json(member);
+   }
   });
 })
 .put(function (req, res){
-  var query = parser(req.params.username);
+  var query = req.params.username;
   yearBook.findOneAndUpdate({username:req.params.username}, req.body, function (err, EditMember){
     if(err){
     //  return errorHandler(err);
-  // res.status(500).send(err);
-    res.json({
-      message: err,
-      status: 302
-    });
+   res.status(302).send("request Cannot  be completed at the moment");
+    // res.json({
+    //   message: "request Cannot  be completed at the moment",
+    //   status: 302
+    // });
     }
   res.json(EditMember);
   //   else {
@@ -85,19 +100,24 @@ router.route('/:username')
   });
  })
 .delete(function (req, res){
-  var query = parser(req.params.username);
-  yearBook.findOneAndRemove({username:req.params.username}, function (err){
+  var query = req.params.username;
+  yearBook.findOneAndRemove({username:req.params.username}, function (err, member){
     if(err){
-      return errorHandler(err);
-         res.status(500).send(err);
-    }
+        return res.status(302).send(err);
+    }else if(member.length < 1){
+      res.json({
+        message: "NO USER FOUND",
+        status: 404
+      });
+    }else{
     res.send('THE USER WAS DELETED SUCCESSFULLY');
+    }
   });
 });
-function parser(name){
-  var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
-  return parsedName;
-}
+// function parser(name){
+//   var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+//   return parsedName;
+// }
 // function errorHandler(err, req, res, next) {
 //   res.status(500);
 //   res.render('error', { error: err });
