@@ -20,8 +20,8 @@ router.route('/')
   yearBook.find({}, '-_id -__v', function(err, data){
     if(err){
           res.json({
-          message: "NOT IN THE DATABASE",
-          status: 404
+          message: "ERROR FETCHING DATA",
+          status: 302
         });
       // return errorHandler(err);
     }else if(data.length < 1){
@@ -57,8 +57,8 @@ router.route('/:username')
   yearBook.find({username: query}, '-_id -__v', function(err, member){
     if(err){
           res.json({
-          message: "NOT IN THE DATABASE",
-          status: 404
+          message: "ERROR FETCHING DATA",
+          status: 302
         });
       // return errorHandler(err);
     }else if(member.length < 1){
