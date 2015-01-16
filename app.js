@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var routes = require('./routes/route');
 var multer = require('multer');
+// var cors =  require('cors');
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -13,6 +14,7 @@ var allowCrossDomain = function(req, res, next) {
 
     next();
 };
+// app.use(cors());
 app.use(allowCrossDomain);
 app.use(multer({dest: './uploads/',
   rename: function (fieldname, filename){
@@ -36,8 +38,6 @@ app.post('/yearBook/upload', function(req,res){
   
   
 
-
-app.use(allowCrossDomain);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger('dev'));
 

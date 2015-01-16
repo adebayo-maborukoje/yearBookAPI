@@ -39,7 +39,7 @@ var yearBookSchema = new Schema({
   username: {type: String, required:true, trim:true, unique:true},
   nickname: {type: String, default: "No Nick Name"},
   mobile :  [{type: Number}],
-  birthday : {type: Date},
+  // birthday : {type: Date},
   occupation:{type: String, default: "Self-Employed"},
   organisation:{type:String, default: "No Organisation"},
   marital: {type: String, default: "single" }, 
