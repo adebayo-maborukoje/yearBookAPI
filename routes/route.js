@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-require('../db/yearBookDB');
+var yearBook = require('../db/yearBookDB');
 var bodyParser = require('body-parser');
-var yearBook = mongoose.model('yearBook');
+
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 
@@ -56,23 +56,20 @@ router.route('/')
   });
 });
 
+router.route('/edit')
+.get(function (req, res, member){ 
+   
+        res.json(member).status(200);
 
-// router.route('/login')
-//   .post(authenticate.signin, function (req, res) {
-//     var loginUser = req.body;
-//     yearBook.findOne(loginUser, {username: loginUser.username, password: loginUser.password}, function (err, member) {
-//       if(err)console.log(err);
-//       res.json(member);
-//     });
-//   });
+})
+
+
 router.route('/login')
-  .post(authenticate.signin, function(req, res){
+  .post( authenticate.signin, function(req, res){
     var loginUser = req.body;
-    yearBook.findOne(loginUser, {username: loginUser.username, password: loginUser.password}, function(err, member){
-      successRedirect : '/username',
-      // failureRedirect : '/'
-      };
-    );
+    console.log('IM here at the moment');
+     
+  
   });
   
 router.route('/:username')

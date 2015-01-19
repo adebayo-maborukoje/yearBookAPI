@@ -57,6 +57,6 @@ var yearBookSchema = new Schema({
 });
 
 yearBookSchema.plugin(uniqueValidator);
-mongoose.model('yearBook', yearBookSchema);
 
-// module.exports = yearBookSchema;
+var yearBook = mongoose.model('yearBook', yearBookSchema);
+ module.exports = yearBook;

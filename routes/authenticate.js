@@ -17,8 +17,8 @@ passport.deserializeUser(function(id, done) {
 
 passport.use('signup', new localStrategy(
   function (req, res, username, done){
-    yearBook.findOne({username: username}, function(err, alreadyExist){
-      if(alreadyExist){
+    yearBook.findOne({username: username}, function(err, user){
+      if(user){
         res.send(401);
       }
       else {
@@ -35,8 +35,9 @@ passport.use('local-signin', new localStrategy(
         passReqToCallback : true
     },
     function (req, username, password, done) {
-            yearBook.findOne({username: username, password: password}, function (err, user) {
-            // console.log(user);
+      console.log('authenticate');
+             yearBook.findOne({username: username, password: password}, function (err, user) {
+            console.log(user);
             if(err)
                 return done(err);
             if(!user){
@@ -53,7 +54,11 @@ passport.use('local-signin', new localStrategy(
   }));
 
 var authenticateUser = {
-  signin : passport.authenticate('local-signin'),
+  signin : passport.authenticate('local-signin',
+  {
+  successRedirect: '/edit',
+  failureRedirect: '/'
+  }),
   signup :passport.authenticate('signup')
   }
 
