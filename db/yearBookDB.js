@@ -37,9 +37,10 @@ var yearBookSchema = new Schema({
   firstname: {type:String, required:true, trim:true},
   lastname: {type: String, required:true, trim:true},
   username: {type: String, required:true, trim:true, unique:true},
+  password:{type: String, required:true},
   nickname: {type: String, default: "No Nick Name"},
   mobile :  [{type: Number}],
-  // birthday : {type: Date},
+  birthday : {type: String},
   occupation:{type: String, default: "Self-Employed"},
   organisation:{type:String, default: "No Organisation"},
   marital: {type: String, default: "single" }, 
@@ -57,3 +58,5 @@ var yearBookSchema = new Schema({
 
 yearBookSchema.plugin(uniqueValidator);
 mongoose.model('yearBook', yearBookSchema);
+
+// module.exports = yearBookSchema;

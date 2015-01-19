@@ -4,6 +4,12 @@ var mongoose = require('mongoose');
 require('../db/yearBookDB');
 var bodyParser = require('body-parser');
 var yearBook = mongoose.model('yearBook');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+
+
+var authenticate = require('./authenticate');
+
 // var multer = require('multer');
 
 // router.route('/upload')
@@ -50,6 +56,24 @@ router.route('/')
   });
 });
 
+
+// router.route('/login')
+//   .post(authenticate.signin, function (req, res) {
+//     var loginUser = req.body;
+//     yearBook.findOne(loginUser, {username: loginUser.username, password: loginUser.password}, function (err, member) {
+//       if(err)console.log(err);
+//       res.json(member);
+//     });
+//   });
+router.route('/login')
+  .post(authenticate.signin, function(req, res){
+    var loginUser = req.body;
+    yearBook.findOne(loginUser, {username: loginUser.username, password: loginUser.password}, function(err, member){
+      successRedirect : '/username',
+      // failureRedirect : '/'
+      };
+    );
+  });
   
 router.route('/:username')
 .get(function (req, res){
@@ -73,7 +97,7 @@ router.route('/:username')
    }
   });
 })
-.put(function (req, res){
+.put(authenticate.signin, function (req, res){
   var query = req.params.username;
   yearBook.findOneAndUpdate({username:req.params.username}, req.body, function (err, EditMember){
     if(err){
@@ -99,7 +123,7 @@ router.route('/:username')
   //   }
   });
  })
-.delete(function (req, res){
+.delete( authenticate.signin, function (req, res){
   var query = req.params.username;
   yearBook.findOneAndRemove({username:req.params.username}, function (err, member){
     if(err){
