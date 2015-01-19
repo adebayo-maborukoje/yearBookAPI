@@ -46,10 +46,7 @@ router.route('/')
   var newMember = req.body;
     yearBook.create(newMember, function (err, newMember){
     if(err){
-            res.json({
-              message: err,
-              status: 403
-            });
+           res.status(403);
       // return errorHandler(err);
     }
     res.json(newMember);
