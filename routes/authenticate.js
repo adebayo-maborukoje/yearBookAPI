@@ -56,7 +56,7 @@ passport.use('local-signin', new localStrategy(
 var authenticateUser = {
   signin : passport.authenticate('local-signin',
   {
-  successRedirect: '/edit',
+  successRedirect: '/:username/edit',
   failureRedirect: '/'
   }),
   signup :passport.authenticate('signup')

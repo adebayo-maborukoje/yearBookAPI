@@ -56,9 +56,8 @@ router.route('/')
   });
 });
 
-router.route('/edit')
+router.route('/:username/edit')
 .get(function (req, res, member){ 
-   
         res.json(member).status(200);
 
 })
@@ -67,7 +66,7 @@ router.route('/edit')
 router.route('/login')
   .post( authenticate.signin, function(req, res){
     var loginUser = req.body;
-    console.log('IM here at the moment');
+    console.log('I\'m here at the moment');
      
   
   });
